@@ -1,5 +1,6 @@
 defmodule ElixirUserApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :elixir_user_api
+  use Absinthe.Phoenix.Endpoint
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -11,17 +12,7 @@ defmodule ElixirUserApiWeb.Endpoint do
     same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
-
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phx.digest
-  # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/",
-    from: :elixir_user_api,
-    gzip: false,
-    only: ElixirUserApiWeb.static_paths()
+  socket "/socket", ElixirUserApiWeb.UserSocket, websocket: true, longpoll: false
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

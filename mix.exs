@@ -45,7 +45,9 @@ defmodule ElixirUserApi.MixProject do
       {:plug_cowboy, "~> 2.5"},
 
       {:absinthe, "~> 1.7"},
-      {:absinthe_plug, "~> 1.5.8"}
+      {:absinthe_plug, "~> 1.5.8"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:absinthe_phoenix, "~> 2.0"}
     ]
   end
 

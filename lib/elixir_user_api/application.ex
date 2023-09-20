@@ -15,9 +15,10 @@ defmodule ElixirUserApi.Application do
       # Start Finch
       {Finch, name: ElixirUserApi.Finch},
       # Start the Endpoint (http/https)
-      ElixirUserApiWeb.Endpoint
+      ElixirUserApiWeb.Endpoint,
       # Start a worker by calling: ElixirUserApi.Worker.start_link(arg)
       # {ElixirUserApi.Worker, arg}
+      {Absinthe.Subscription, ElixirUserApiWeb.Endpoint}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

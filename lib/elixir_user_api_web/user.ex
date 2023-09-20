@@ -80,8 +80,11 @@ defmodule ElixirUserApiWeb.User do
     if user_to_update === nil do
       {:error, "User not found"}
     else
-      updated_user = update_in(user_to_update, [:preferences], &Map.merge(&1, params))
-      {:ok, updated_user.preferences}
+      user_to_update
+      |> update_in([:preferences], &Map.merge(&1, params))
+      |> then(&(&1.preferences))
+      |> Map.put(:user_id, user_id)
+      |> then(&{:ok, &1})
     end
   end
 end
