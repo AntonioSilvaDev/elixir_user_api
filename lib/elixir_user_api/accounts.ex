@@ -5,7 +5,7 @@ defmodule ElixirUserApi.Accounts do
   alias EctoShorts.Actions
   alias ElixirUserApi.Accounts.{
     User,
-    UserPreferences
+    Preference
   }
 
   def all_users(params \\ %{}) do
@@ -25,6 +25,6 @@ defmodule ElixirUserApi.Accounts do
   end
 
   def update_user_preferences(user_id, params \\ %{}) do
-    Actions.find_and_update(UserPreferences, %{user_id: user_id}, params)
+    Actions.find_and_upsert(Preference, %{user_id: user_id}, params)
   end
 end

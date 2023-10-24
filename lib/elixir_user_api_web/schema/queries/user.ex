@@ -14,6 +14,9 @@ defmodule ElixirUserApiWeb.Schema.Queries.User do
       arg :likes_emails, :boolean
       arg :likes_phone_calls, :boolean
       arg :likes_faxes, :boolean
+      arg :before, :integer
+      arg :after, :integer
+      arg :first, :integer
 
       resolve &Resolvers.User.all/2
     end

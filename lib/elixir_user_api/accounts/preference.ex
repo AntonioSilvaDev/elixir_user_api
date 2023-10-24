@@ -1,4 +1,4 @@
-defmodule ElixirUserApi.Accounts.UserPreferences do
+defmodule ElixirUserApi.Accounts.Preference do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -21,6 +21,6 @@ defmodule ElixirUserApi.Accounts.UserPreferences do
   end
 
   def create_changeset(params) do
-    changeset(%ElixirUserApi.Accounts.UserPreferences{}, params)
+    changeset(%ElixirUserApi.Accounts.Preference{}, params)
   end
 end

@@ -8,7 +8,7 @@ defmodule ElixirUserApi.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
-    has_one :preferences, ElixirUserApi.Accounts.UserPreferences
+    has_one :preferences, ElixirUserApi.Accounts.Preference
 
     timestamps()
   end
@@ -16,10 +16,9 @@ defmodule ElixirUserApi.Accounts.User do
   @doc false
   def changeset(accounts, attrs) do
     accounts
-    |> cast(attrs, @required_fields)
+    |> cast(attrs, @allowed_fields)
     |> validate_required(@required_fields)
     |> EctoShorts.CommonChanges.preload_change_assoc(:preferences)
-    |> IO.inspect(label: "user changeset")
   end
 
   def create_changeset(params) do
