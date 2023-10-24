@@ -57,10 +57,6 @@ defmodule ElixirUserApiWeb.User do
     {:ok, Enum.find(@users, & &1.id === id)}
   end
 
-  def create(params) do
-    {:ok, params}
-  end
-
   def update(id, params) do
     id = String.to_integer(id)
     user_to_update = Enum.find(@users, & &1.id === id)

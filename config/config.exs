@@ -17,6 +17,18 @@ config :elixir_user_api, ElixirUserApiWeb.Endpoint,
   pubsub_server: ElixirUserApi.PubSub,
   live_view: [signing_salt: "1jzTD1WH"]
 
+config :elixir_user_api, ElixirUserApi.Repo,
+    database: "elixir_user_api_repo",
+    username: "postgres",
+    hostname: "localhost"
+
+config :elixir_user_api,
+    ecto_repos: [ElixirUserApi.Repo]
+
+config :ecto_shorts,
+  repo: ElixirUserApi.Repo,
+  error_module: EctoShorts.Actions.Error
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

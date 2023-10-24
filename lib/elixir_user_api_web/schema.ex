@@ -4,8 +4,10 @@ defmodule ElixirUserApiWeb.Schema do
   """
   use Absinthe.Schema
 
-  import_types ElixirUserApiWeb.Types.User
-  import_types ElixirUserApiWeb.Types.UserPreferences
+  import_types ElixirUserApiWeb.Types.{
+    User,
+    UserPreferences
+  }
 
   import_types ElixirUserApiWeb.Schema.Queries.User
   import_types ElixirUserApiWeb.Schema.Mutations.User
@@ -20,7 +22,7 @@ defmodule ElixirUserApiWeb.Schema do
 
   subscription do
     field :user_created, :user do
-      trigger :create_user, topic: fn user ->
+      trigger :create_user, topic: fn _user ->
         "user_created"
       end
 
@@ -29,7 +31,7 @@ defmodule ElixirUserApiWeb.Schema do
       end
     end
 
-    field :updated_user_preferences, :user_preferences do
+    field :updated_user_preferences, :preferences do
       arg :user_id, non_null(:id)
 
       trigger :update_user_preferences, topic: fn user_preferences ->
@@ -42,4 +44,14 @@ defmodule ElixirUserApiWeb.Schema do
     end
   end
 
+  def context(ctx) do
+    source = Dataloader.Ecto.new(ElixirUserApi.Repo)
+    dataloader = Dataloader.add_source(Dataloader.new(), ElixirUserApi.Accounts, source)
+
+    Map.put(ctx, :loader, dataloader)
+  end
+
+  def plugins() do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+  end
 end

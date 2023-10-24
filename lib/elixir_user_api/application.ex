@@ -10,6 +10,8 @@ defmodule ElixirUserApi.Application do
     children = [
       # Start the Telemetry supervisor
       ElixirUserApiWeb.Telemetry,
+      # Start the Ecto repository
+      ElixirUserApi.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: ElixirUserApi.PubSub},
       # Start Finch

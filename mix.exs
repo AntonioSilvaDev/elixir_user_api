@@ -35,6 +35,9 @@ defmodule ElixirUserApi.MixProject do
       {:phoenix, "~> 1.7.2"},
       {:phoenix_live_dashboard, "~> 0.7.2"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
+      {:ecto_shorts, "~> 2.0"},
+      {:ecto_sql, "~> 3.10"},
+      {:postgrex, "~> 0.17"},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
@@ -46,6 +49,7 @@ defmodule ElixirUserApi.MixProject do
 
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5.8"},
+      {:dataloader, "~> 2.0"},
       {:phoenix_pubsub, "~> 2.0"},
       {:absinthe_phoenix, "~> 2.0"}
     ]
