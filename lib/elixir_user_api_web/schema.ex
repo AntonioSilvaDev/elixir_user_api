@@ -31,7 +31,7 @@ defmodule ElixirUserApiWeb.Schema do
       end
     end
 
-    field :updated_user_preferences, :preferences do
+    field :updated_user_preferences, :preference do
       arg :user_id, non_null(:id)
 
       trigger :update_user_preferences, topic: fn user_preferences ->

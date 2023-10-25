@@ -2,23 +2,23 @@ defmodule ElixirUserApi.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_fields [:name, :email]
-  @allowed_fields [:preferences | @required_fields]
+  @allowed_fields [:name, :email]
 
   schema "users" do
+    has_one :preference, ElixirUserApi.Accounts.Preference
+
     field :name, :string
     field :email, :string
-    has_one :preferences, ElixirUserApi.Accounts.Preference
 
     timestamps()
   end
 
   @doc false
-  def changeset(accounts, attrs) do
-    accounts
+  def changeset(user, attrs) do
+    user
     |> cast(attrs, @allowed_fields)
-    |> validate_required(@required_fields)
-    |> EctoShorts.CommonChanges.preload_change_assoc(:preferences)
+    |> validate_required(@allowed_fields)
+    |> EctoShorts.CommonChanges.preload_change_assoc(:preference)
   end
 
   def create_changeset(params) do

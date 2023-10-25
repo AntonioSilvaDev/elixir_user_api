@@ -2,11 +2,10 @@ defmodule ElixirUserApi.Accounts.Preference do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_fields [:user_id]
-  @allowed_fields [:likes_emails, :likes_faxes, :likes_phone_calls | @required_fields]
+  @allowed_fields [:likes_emails, :likes_faxes, :likes_phone_calls]
 
   schema "user_preferences" do
-    belongs_to :user, ElixirUserApi.Accounts.User
+    belongs_to :user, ElixirUserApi.Accounts.User, foreign_key: :user_id
 
     field :likes_emails, :boolean
     field :likes_faxes, :boolean
@@ -14,10 +13,10 @@ defmodule ElixirUserApi.Accounts.Preference do
   end
 
   @doc false
-  def changeset(accounts, attrs) do
-    accounts
+  def changeset(preference, attrs) do
+    preference
     |> cast(attrs, @allowed_fields)
-    |> validate_required(@required_fields)
+    |> validate_required(@allowed_fields)
   end
 
   def create_changeset(params) do

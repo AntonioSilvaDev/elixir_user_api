@@ -17,7 +17,7 @@ defmodule ElixirUserApiWeb.Types.UserPreferences do
     field :likes_faxes, :boolean
   end
 
-  object :preferences do
+  object :preference do
     field :likes_emails, :boolean
     field :likes_phone_calls, :boolean
     field :likes_faxes, :boolean

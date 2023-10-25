@@ -7,7 +7,7 @@ defmodule ElixirUserApiWeb.Schema.Mutations.User do
     field :create_user, :user do
       arg :name, non_null(:string)
       arg :email, non_null(:string)
-      arg :preferences, non_null(:create_user_preferences)
+      arg :preference, :create_user_preferences
 
       resolve &Resolvers.User.create/2
     end
@@ -20,7 +20,7 @@ defmodule ElixirUserApiWeb.Schema.Mutations.User do
       resolve &Resolvers.User.update/2
     end
 
-    field :update_user_preferences, :preferences do
+    field :update_user_preferences, :preference do
       arg :user_id, non_null(:id)
       arg :likes_emails, :boolean
       arg :likes_phone_calls, :boolean
