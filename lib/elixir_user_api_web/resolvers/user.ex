@@ -4,7 +4,7 @@ defmodule ElixirUserApiWeb.Resolvers.User do
   # alias ElixirUserApiWeb.User
   alias ElixirUserApi.Accounts
 
-  def all(params, _ctx), do: {:ok, Accounts.all_users(params)}
+  def all(%{input: params}, _ctx), do: {:ok, Accounts.all_users(params)}
 
   def find(%{id: id}, _ctx), do: Accounts.find_user(%{id: id})
 
