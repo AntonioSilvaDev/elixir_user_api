@@ -8,8 +8,6 @@ defmodule ElixirUserApi.Accounts do
     Preference
   }
 
-  alias ElixirUserApi.Repo
-
   def all_users(params \\ %{}) do
     params
     |> Enum.reduce(User, &convert_field_to_query/2)
