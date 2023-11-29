@@ -1,5 +1,5 @@
 defmodule ElixirUserApi.Accounts do
-  @doc """
+  @moduledoc """
   Context for Accounts
   """
   alias EctoShorts.Actions
@@ -9,10 +9,8 @@ defmodule ElixirUserApi.Accounts do
     Preference
   }
 
-  # alias ElixirUserApi.Repo
-
   @doc """
-  ElixirUserApi.Accounts.all_users()
+  Allows for querying all users.  Can also query for users by preference association.
   ElixirUserApi.Accounts.all_users(%{preferences: %{likes_faxes: true, likes_emails: false}, preload: [:preference]})
   """
   def all_users(params \\ %{})
