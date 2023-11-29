@@ -4,6 +4,7 @@ defmodule ElixirUserApi.Accounts.User do
   import Ecto.Query
 
   @allowed_fields [:name, :email]
+  @allowed_preference_query_fields [:likes_emails, :likes_faxes, :likes_phone_calls]
 
   schema "users" do
     has_one :preference, ElixirUserApi.Accounts.Preference
@@ -26,16 +27,6 @@ defmodule ElixirUserApi.Accounts.User do
     changeset(%ElixirUserApi.Accounts.User{}, params)
   end
 
-  def by_name(query \\ ElixirUserApi.Accounts.User, name) do
-    searched_name = "%#{name}%"
-    where(query, [u], ilike(u.name, ^searched_name))
-  end
-
-  def by_email(query \\ ElixirUserApi.Accounts.User, email) do
-    searched_email = "%#{email}%"
-    where(query, [u], ilike(u.email, ^searched_email))
-  end
-
   def join_preference(query \\ ElixirUserApi.Accounts.User) do
     if has_named_binding?(query, :preference) do
       query
@@ -44,15 +35,14 @@ defmodule ElixirUserApi.Accounts.User do
     end
   end
 
-  def by_likes_emails(query \\ join_preference(), preference)do
-    where(query, [preference: p], p.likes_emails == ^preference)
-  end
-
-  def by_likes_faxes(query \\ join_preference(), preference) do
-    where(query, [preference: p], p.likes_faxes == ^preference)
-  end
-
-  def by_likes_phone_calls(query \\ join_preference(), preference) do
-    where(query, [preference: p], p.likes_phone_calls == ^preference)
+  def by_preferences(query, params) do
+    Enum.reduce(
+      params,
+      query,
+      fn
+        {k, v}, q when k in @allowed_preference_query_fields and is_boolean(v) ->
+          where(q, [u, preference], field(preference, ^k) == ^v)
+          _, q -> q
+    end)
   end
 end

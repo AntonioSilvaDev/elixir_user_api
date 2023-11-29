@@ -3,53 +3,30 @@ defmodule ElixirUserApi.Accounts do
   Context for Accounts
   """
   alias EctoShorts.Actions
+
   alias ElixirUserApi.Accounts.{
     User,
     Preference
   }
 
-  def all_users(params \\ %{}) do
-    params
-    |> Enum.reduce(User, &convert_field_to_query/2)
-    |> Actions.all()
+  # alias ElixirUserApi.Repo
+
+  @doc """
+  ElixirUserApi.Accounts.all_users()
+  ElixirUserApi.Accounts.all_users(%{preferences: %{likes_faxes: true, likes_emails: false}, preload: [:preference]})
+  """
+  def all_users(params \\ %{})
+
+  def all_users(%{preferences: _} = params) do
+    {preference_filters, remaining_params} = Map.pop(params, :preferences)
+
+    User.join_preference()
+    |> User.by_preferences(preference_filters)
+    |> Actions.all(remaining_params)
   end
 
-  def convert_field_to_query({:name, value}, query) do
-    User.by_name(query, value)
-  end
-
-  def convert_field_to_query({:email, value}, query) do
-    User.by_email(query, value)
-  end
-
-  def convert_field_to_query({:likes_emails, value}, query) do
-    query
-    |> User.join_preference()
-    |> User.by_likes_emails(value)
-  end
-
-  def convert_field_to_query({:likes_faxes, value}, query) do
-    query
-    |> User.join_preference()
-    |> User.by_likes_faxes(value)
-  end
-
-  def convert_field_to_query({:likes_phones_calls, value}, query) do
-    query
-    |> User.join_preference()
-    |> User.by_likes_phone_calls(value)
-  end
-
-  def convert_field_to_query({:before, value}, query) do
-    EctoShorts.CommonFilters.convert_params_to_filter(query, %{before: value})
-  end
-
-  def convert_field_to_query({:after, value}, query) do
-    EctoShorts.CommonFilters.convert_params_to_filter(query, %{after: value})
-  end
-
-  def convert_field_to_query({:first, value}, query) do
-    EctoShorts.CommonFilters.convert_params_to_filter(query, %{first: value})
+  def all_users(params) do
+    Actions.all(User, params)
   end
 
   def find_user(params \\ %{}) do
