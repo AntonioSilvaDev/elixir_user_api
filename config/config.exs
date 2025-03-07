@@ -18,12 +18,17 @@ config :elixir_user_api, ElixirUserApiWeb.Endpoint,
   live_view: [signing_salt: "1jzTD1WH"]
 
 config :elixir_user_api, ElixirUserApi.Repo,
-    database: "elixir_user_api_repo",
-    username: "postgres",
-    hostname: "localhost"
+  database: "elixir_user_api_repo",
+  username: "postgres",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  log: :debug,
+  stacktrace: true,
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 50
 
 config :elixir_user_api,
-    ecto_repos: [ElixirUserApi.Repo]
+  ecto_repos: [ElixirUserApi.Repo]
 
 config :ecto_shorts,
   repo: ElixirUserApi.Repo,
