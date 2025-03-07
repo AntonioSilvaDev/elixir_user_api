@@ -3,11 +3,12 @@ defmodule ElixirUserApi.Accounts.User do
   import Ecto.Changeset
   import Ecto.Query
 
-  @allowed_fields [:name, :email]
+  @required_fields [:name, :email]
+  @allowed_fields [] ++ @required_fields
   @allowed_preference_query_fields [:likes_emails, :likes_faxes, :likes_phone_calls]
 
   schema "users" do
-    has_one :preference, ElixirUserApi.Accounts.Preference
+    has_one :preferences, ElixirUserApi.Accounts.UserPreference
 
     field :name, :string
     field :email, :string
@@ -20,7 +21,7 @@ defmodule ElixirUserApi.Accounts.User do
     user
     |> cast(attrs, @allowed_fields)
     |> validate_required(@allowed_fields)
-    |> EctoShorts.CommonChanges.preload_change_assoc(:preference)
+    |> EctoShorts.CommonChanges.preload_change_assoc(:preferences)
   end
 
   def create_changeset(params) do
@@ -42,7 +43,10 @@ defmodule ElixirUserApi.Accounts.User do
       fn
         {k, v}, q when k in @allowed_preference_query_fields and is_boolean(v) ->
           where(q, [u, preference], field(preference, ^k) == ^v)
-          _, q -> q
-    end)
+
+        _, q ->
+          q
+      end
+    )
   end
 end

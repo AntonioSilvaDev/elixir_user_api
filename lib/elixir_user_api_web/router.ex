@@ -5,15 +5,10 @@ defmodule ElixirUserApiWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ElixirUserApiWeb do
-    pipe_through :api
-  end
-
   scope "/" do
     pipe_through :api
 
-    forward "/graphql", Absinthe.Plug,
-      schema: ElixirUserApiWeb.Schema
+    forward "/api", Absinthe.Plug, schema: ElixirUserApiWeb.Schema
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: ElixirUserApiWeb.Schema,

@@ -1,19 +1,19 @@
 defmodule ElixirUserApiWeb.Schema.Queries.User do
   use Absinthe.Schema.Notation
 
-  alias ElixirUserApiWeb.Resolvers
+  alias ElixirUserApiWeb.UserResolver
 
   object :user_queries do
     field :user, :user do
       arg :id, non_null(:id)
 
-      resolve &Resolvers.User.find/2
+      resolve &UserResolver.find_user/2
     end
 
     field :users, list_of(:user) do
-      arg :input, :user_query_input
+      arg :filter, :user_filter_input
 
-      resolve &Resolvers.User.all/2
+      resolve &UserResolver.all_users/2
     end
   end
 end
