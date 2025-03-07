@@ -35,6 +35,6 @@ defmodule ElixirUserApiWeb.Types.User do
     field :name, :string
     field :email, :string
 
-    field :preferences, resolve: dataloader(ElixirUserApi.Accounts, :preferences)
+    field :preferences, :user_preference, resolve: dataloader(ElixirUserApi.Accounts, :preferences)
   end
 end

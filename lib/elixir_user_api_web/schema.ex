@@ -6,7 +6,7 @@ defmodule ElixirUserApiWeb.Schema do
 
   import_types ElixirUserApiWeb.Types.{
     User,
-    UserPreferences
+    UserPreference
   }
 
   import_types ElixirUserApiWeb.Schema.Queries.User
@@ -31,7 +31,7 @@ defmodule ElixirUserApiWeb.Schema do
       end
     end
 
-    field :updated_user_preferences, :preference do
+    field :updated_user_preferences, :user_preference do
       arg :user_id, non_null(:id)
 
       trigger :update_user_preferences, topic: fn user_preferences ->
