@@ -11,6 +11,7 @@ defmodule ElixirUserApiWeb.Schema do
 
   import_types ElixirUserApiWeb.Schema.Queries.User
   import_types ElixirUserApiWeb.Schema.Mutations.User
+  import_types ElixirUserApiWeb.Schema.Subscriptions.User
 
   query do
     import_fields :user_queries
@@ -21,27 +22,7 @@ defmodule ElixirUserApiWeb.Schema do
   end
 
   subscription do
-    field :user_created, :user do
-      trigger :create_user, topic: fn _user ->
-        "user_created"
-      end
-
-      config fn _, _ ->
-        {:ok, topic: "user_created"}
-      end
-    end
-
-    field :updated_user_preferences, :user_preference do
-      arg :user_id, non_null(:id)
-
-      trigger :update_user_preferences, topic: fn user_preferences ->
-        user_preferences.user_id
-      end
-
-      config fn args, _ ->
-        {:ok, topic: args.user_id}
-      end
-    end
+    import_fields :user_subscriptions
   end
 
   def context(ctx) do
