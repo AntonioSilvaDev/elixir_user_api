@@ -10,11 +10,11 @@ defmodule ElixirUserApi.Accounts.UserPreference do
                   ] ++ @required_fields
 
   schema "user_preferences" do
-    belongs_to(:user, ElixirUserApi.Accounts.User, foreign_key: :user_id)
+    belongs_to :user, ElixirUserApi.Accounts.User, foreign_key: :user_id
 
-    field(:likes_emails, :boolean)
-    field(:likes_faxes, :boolean)
-    field(:likes_phone_calls, :boolean)
+    field :likes_emails, :boolean
+    field :likes_faxes, :boolean
+    field :likes_phone_calls, :boolean
   end
 
   @doc false
